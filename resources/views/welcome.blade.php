@@ -36,8 +36,7 @@
 </head>
 <body>
     <div class="button-container">
-        <a href="{{route('admin.login')}}" class="button">Login</a>
-        <a href="{{route('admin.register')}}" class="button">Register</a>
+        
     </div>
 </body>
 </html>
