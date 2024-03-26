@@ -15,11 +15,6 @@ class AuthController extends Controller
         return view('admin.auth.login');
     }
 
-    public function register()
-    {
-        return view('admin.auth.register');
-    }
-
     public function loginPost(Request $request)
     {
         $validate = Validator::make($request->all(),[
@@ -42,12 +37,16 @@ class AuthController extends Controller
         return redirect()->back()->with("fail","Something Went Wrong!");
     }
 
+    public function register()
+    {
+        return view('admin.auth.register');
+    }
+
     public function registerPost(Request $request)
     {
-       
         $validate = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => '|email|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required',
         ]);
@@ -57,18 +56,20 @@ class AuthController extends Controller
                 ->withErrors($validate)
                 ->withInput();
         }
-    
-        // Create new user
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-    
+
         // Log in the newly registered user
-        Auth::login($user);
-    
-        return redirect()->route('admin.dashboard')->with("success", "Registration successful! Welcome to our platform!");
+        if($user!=null){
+            Auth::login($user);
+            return redirect()->route('admin.dashboard')->with("success", "Registration successful! Welcome to our platform!");
+        }
+
+        return redirect()->back()->with('fail', 'Something Went Wrong!');
     }
     
 }
