@@ -15,7 +15,12 @@ class Authenticate
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            return $next($request);
+            $user = Auth::user();
+            if ($user->user_type == 'admin') {
+                return $next($request);
+            } elseif ($user->user_type == 'user') {
+                return redirect()->route('welcome');
+            }
         }
         return redirect()->route('login');
     }

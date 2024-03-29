@@ -32,7 +32,11 @@ class AuthController extends Controller
 
         if(Auth::attempt(['email' => $request->email, 'password'=> $request->password],$rem)){
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+            if(Auth::user()->user_type == 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('welcome');
+            }
         }
         return redirect()->back()->with("fail","Something Went Wrong!");
     }
@@ -61,12 +65,17 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'user_type' => 'user',
         ]);
 
         // Log in the newly registered user
         if($user!=null){
             Auth::login($user);
-            return redirect()->route('admin.dashboard')->with("success", "Registration successful! Welcome to our platform!");
+            if(Auth::user()->user_type == 'admin') {
+                return redirect()->route('admin.dashboard')->with("success", "Registration successful! Welcome to our platform!");
+            } else {
+                return redirect()->route('welcome')->with("success", "Registration successful! Welcome to our platform!");
+            }
         }
 
         return redirect()->back()->with('fail', 'Something Went Wrong!');
