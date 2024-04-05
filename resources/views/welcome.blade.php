@@ -11,32 +11,26 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            text-align: center;
         }
 
         .button-container {
             display: flex;
             gap: 20px;
         }
-
-        .button {
-            padding: 10px 20px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #3498db;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+        .bg-warning{
+            background-color: rgba(166, 166, 26, 0.858);
         }
-
-        .button:hover {
-            background-color: #2980b9;
+        .text-white{
+            color: #fff;
+            font-size: 5em
         }
     </style>
     <title>Centered Buttons</title>
 </head>
-<body>
+<body class="bg-warning">
     <div class="button-container">
-        
+        <h1 class="text-white">WELCOME <br>To My Channel<br> Code With Tanveer</h1>  
     </div>
 </body>
 </html>
