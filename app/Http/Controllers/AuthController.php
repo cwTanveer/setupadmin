@@ -72,4 +72,10 @@ class AuthController extends Controller
         return redirect()->back()->with('fail', 'Something Went Wrong!');
     }
     
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('welcome');
+    }
 }
