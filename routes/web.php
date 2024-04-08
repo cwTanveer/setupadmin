@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
 Route::group(['middleware'=>'admin'],function(){
     Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
+    Route::get('profile',[DashboardController::class,'profile'])->name('admin.profile');
+    Route::post('profile/update',[DashboardController::class,'profileUpdate'])->name('admin.profile.update');
+    Route::post('profile/update/password',[DashboardController::class,'profileUpdatePassword'])->name('admin.profile.password.update');
 });
+
 Route::get('login',[AuthController::class,'login'])->name('login');
 Route::post('login',[AuthController::class,'loginPost']);
 Route::get('register',[AuthController::class,'register'])->name('register');
