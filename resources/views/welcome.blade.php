@@ -12,7 +12,7 @@
             height: 100vh;
             margin: 0;
             text-align: center;
-            padding-left: 400px;
+           
         }
 
         .button-container {
